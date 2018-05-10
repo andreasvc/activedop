@@ -1,0 +1,105 @@
+{% extends "layout.html" %}
+{% block body %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.34.0/codemirror.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.34.0/codemirror.min.js" type="text/javascript" charset="utf=8"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.34.0/addon/edit/matchbrackets.min.js" type="text/javascript" charset="utf=8"></script>
+
+<div>
+	<a href="{{ prevlink }}">prev</a>
+	| {{ sentno }} / {{ totalsents }}
+	| <a href="{{ nextlink }}">next</a>
+	| <a href="{{ unextlink }}">next unannotated</a>
+	| {{ (100 * numannotated  / totalsents)|round(1) }} % done <progress value="{{ numannotated }}" max="{{ totalsents }}"></progress>
+	| <a href="/annotate/context/{{ lineno }}#{{ lineno }}">context</a>
+	| <a href="/annotate/export">export</a>
+	| <a href="javascript: toggle('help');">help</a>
+	| {% if not session.username -%}
+	<a href="{{ url_for('login') }}">log in</a>
+	{%- else -%}
+	<a href="{{ url_for('logout') }}">log out</a>
+	{%- endif %}
+	<br>
+	{{ senttok }}
+</div>
+{{ msg }}
+
+<div id=help style="display: none;">
+	<ul>
+	<li>To change a label, click on a node to select a different label from a list.
+		The syntactic category and the function tag (before and after the dash "-")
+		must be selected separately by clicking on the corresponding part of the label.
+	<li>Re-attach a node by dragging and dropping it on a new parent. This can be used to created discontinuous constituents.
+	<li>Similarly, nodes can be removed and new ones added by dragging to/from below the tree.
+	<li>Right-click on a node to re-parse a subtree
+		and replace it by one from the resulting list.
+	<li>Finally, the bracketing can be edited manually in the text box below the tree;
+		press "validate" to update the tree.
+		Whitespace is ignored. Each token must have a dedicated POS tag.
+		Consult the list at the bottom specifying valid labels for constituents and POS tags, respectively.
+</ul>
+<pre>{{ annotationhelp }}</pre>
+</div>
+
+
+<pre id=tree>
+[...wait for it...]
+</pre>
+
+<div id=nbest style="display: none; ">
+</div>
+
+<div id=info>
+	<span data-id=deletenode ondragover="allowDrop(event);" ondrop="drop(event);">(drop node here to remove)</span>
+	<div>Constituent labels (drag and drop on a parent to add a new node):
+		{% for label in phrasallabels -%}
+			{% if label != 'ROOT' -%}
+		<span class=n data-id="newlabel_{{ label }}" style="cursor: move; " draggable="true" ondragstart="drag(event);">{{ label }}</span> 
+			{%- endif %}
+		{% endfor -%}
+	</div>
+	<div>POS tags: <span class=p>{{ poslabels|join(" ") }}</span></div>
+	{% if functiontags -%}
+	<div>Function tags: <span class=f>{{ functiontags|join(" ") }}</span></div>
+	{%- endif %}
+</div>
+
+<div id=edit>
+	<form name=queryform onSubmit="event.preventDefault(); replacetree(); return false; ">
+		<textarea name=tree rows={{ rows }} cols={{ cols }}>{{ treestr }}</textarea>
+		<input type=hidden name=sentno value="{{ sentno }}" />
+		<input type=hidden name=senttok value="{{ senttok }}" />
+		<input type=submit value=Validate>
+	</form>
+</div>
+
+{% for a, labels in (
+		('phrasal', phrasallabels),
+		('pos', poslabels),
+		('function', functiontags),
+		('morph', morphtags))
+		%}
+<div id="{{ a }}picker" class=picker>
+	<a href="javascript: pick('{{ a }}', null)">(cancel)</a><br>
+	{% if a == 'function' -%}
+	<a href="javascript: pick('{{ a }}', '')">(none)</a><br>
+	{%- endif %}
+	{% for label in labels -%}
+	<a href="javascript: pick('{{ a }}', '{{ label }}')">{{ label }}</a><br>
+	{% endfor -%}
+</div>
+{% endfor %}
+
+<script>
+	var oldtree = '';  // used to track changes in the text area
+	window.onload = replacetree;
+
+	var editor = CodeMirror.fromTextArea(
+			document.queryform.tree,
+			{
+				indentWithTabs: true,
+				lineNumbers: true,
+				matchBrackets: true,
+			});
+</script>
+
+{% endblock %}

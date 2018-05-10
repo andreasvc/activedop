@@ -1,0 +1,9 @@
+<div class=deptree style="display: none; " id="dep">{{ depsvg }}</div>
+<pre>{{ msg }}; show/hide (<a href="javascript: toggle('dep'); ">dependencies</a>; <a href='javascript: toggle("info")'>info</a>); decision tree (depth {{ maxdepth }}): <span style="display: none;" id=info>
+{{ info }}
+{%- if dep -%}
+Dependency conversion:
+<span id=depsrc>{{ dep }}</span>
+{%- endif -%}</span>
+<span id=nbest>{{ result }}{{ nbest }}</span>
+</pre>

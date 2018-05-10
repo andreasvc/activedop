@@ -1,0 +1,7 @@
+(S (NP (DT The) (NN cat)) (VP (VBP saw) (NP (DT the) (JJ hungry) (NN dog)) (PP (IN with) (NP (DT a) (NN telescope)))))
+(S (NP (DT The) (NN cat) (PP (IN with) (NP (DT the) (NN telescope)))) (VP (VBP saw) (NP (DT the) (NN dog))))
+(S (NP (DT The) (NN mouse)) (VP (VBP saw) (NP (DT the) (NN cat)) (PP (IN in) (NP (DT the) (NN forrest)))))
+(S (NP (DT The) (NN mouse)) (VP (VBP saw) (NP (DT the) (JJ yellow) (NN cat) (PP (IN under) (NP (DT the) (NN tree))))))
+(S (NP (DT The) (JJ little) (NN mouse)) (VP (VBP saw) (NP (DT the) (NN cat))))
+(S (NP (DT The) (NN cat)) (VP (VBP ate) (NP (DT the) (NN dog))))
+(S (NP (DT The) (NN mouse)) (VP (VBP ate) (NP (DT the) (NN cat))))

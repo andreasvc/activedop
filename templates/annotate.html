@@ -1,0 +1,69 @@
+{% extends "layout.html" %}
+{% block body %}
+<script>
+	window.onload = annotate;
+</script>
+
+<form name=queryform onSubmit="event.preventDefault(); annotate(); return false; ">
+	<div>
+		<a href="{{ prevlink }}">prev</a>
+		| {{ sentno }} / {{ totalsents }}
+		| <a href="{{ nextlink }}">next</a>
+		| {{ (100 * numannotated  / totalsents)|round(1) }} % done <progress value="{{ numannotated }}" max="{{ totalsents }}"></progress>
+		| <a href="/annotate/context/{{ lineno }}#{{ lineno }}">context</a>
+		| <a href="/annotate/export">export</a>
+		| <a href="javascript: toggle('help');">help</a>
+		| {% if not session.username -%}
+		<a href="{{ url_for('login') }}">log in</a>
+		{% else -%}
+		<a href="{{ url_for('logout') }}">log out</a>
+		{%- endif %}
+		<select name=objfun style="display: none; ">
+			<option value=mpp>MPP</option>
+			<option value=mpd>MPD</option>
+			<option value=shortest>MPSD</option>
+			<option value=sl-dop>SL-DOP</option>
+			<option value=sl-dop-simple>SL-DOP-simple</option>
+		</select>
+		<select name=est style="display: none; ">
+			<option value=rfe>RFE</option>
+			<option value=ewe>EWE</option>
+		</select>
+		<input type=hidden name=sent value="{{ sent }}" />
+		<input type=hidden name=sentno value="{{ sentno }}" />
+		<input type=submit value="Re-parse" /><br>
+	    {{ sent }}
+	</div>
+</form>
+
+<div style="display: none; " id=constraintdiv>
+	Required: [<span id=showrequire></span>]; Blocked: [<span id=showblock></span>]
+</div>
+
+<blockquote class=intro id=help style="display: none; "><p>
+	<strong>Instructions.</strong>
+	Select the correct syntactic analysis for each sentence.
+	There are three ways to do this:
+	<ol>
+		<li> Answer the questions to follow the decision tree:
+			is the given constituent correct or not?
+			This narrows down the list of possibilities until one candidate
+			remains. Notice that after answering each question, the suggested tree
+			changes (including, but not necessarily limited to, the constituent in question).
+		<li> Filter the list of candidates by choosing correct or wrong constituents to use as constraints.
+			Left-click to mark a constituent as required.
+			Right-click to block a constituent.
+			Click on a constraint to remove it.
+			Press "Re-parse" to apply constraints at an early stage to get more parse trees.
+			Reload page to discard constraints.
+		<li> Finally, click "edit" to manually edit a tree. This can
+			be done with any of the trees obtained in the previous steps that is closest to the correct analysis.
+			This makes it possible to assign the correct analysis even when none
+			of the candidates is completely correct.
+	</ol>
+<pre>{{ annotationhelp }}</pre>
+</blockquote>
+
+<div id=result>
+</div>
+{% endblock %}

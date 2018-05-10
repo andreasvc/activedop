@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+{% block body %}
+<blockquote class=intro>
+	Your mission, should you choose to accept it,<br>
+	is to find the correct parse tree for {{ totalsents }} sentences.
+</blockquote>
+
+{% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
+<form action={{ url_for('login', next=request.args.get('next', '')) }} method=post>
+	<label>Username:
+		<input type=text name=username size=15 value="JoeAnnotator" autofocus></label><br>
+	<label>Password:
+		<input type=password name=password></label><br>
+	<input type=submit value=Login>
+</form>
+{% endblock %}

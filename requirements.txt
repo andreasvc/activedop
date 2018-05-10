@@ -1,0 +1,4 @@
+Flask
+numpy
+scikit-learn
+git+https://github.com/andreasvc/disco-dop

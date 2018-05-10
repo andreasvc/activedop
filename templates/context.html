@@ -1,0 +1,9 @@
+{% extends "layout.html" %}
+{% block body %}
+	<ol>
+	{% for sent in sentences %}
+	<li{% if loop.index == lineno %} style="background: #cee5F5; "{% endif %}>
+		<a name="{{ loop.index }}">[{{ ranking[loop.index0] }}] {{ sent }}</a>
+	{% endfor %}
+	</ol>
+{% endblock %}

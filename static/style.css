@@ -1,0 +1,70 @@
+body { font-family: Helvetica, Arial, sans-serif; }
+blockquote.intro { width: 600px; text-align: justify;  }
+span.r { color: red; }
+span.b, span.n, span.p { color: blue; }
+span.f { color: green; }
+span.m { color: Chocolate; }
+/* .m { background: #ffe96c; } */
+.metanav        { text-align: right; font-size: 0.8em; padding: 0.3em;
+                  margin-bottom: 1em; background: #fafafa; }
+.flash          { background: #cee5F5; padding: 0.5em;
+                  border: 1px solid #aacbe2; }
+.error          { background: #f0d6d6; padding: 0.5em; }
+
+pre, .mono, .deptree, span.tt {
+	font-family:
+		"Liberation Mono",
+		"Ubuntu Monospace",
+		"Andale Mono",
+		"Lucida Console",
+		"Droid Sans Mono",
+		"DejaVu Sans Mono",
+		monospace;
+	font-size: 10pt;
+}
+
+.item {
+	white-space: nowrap;
+	display: inline;
+}
+
+.picker {
+	top: 0px;
+    left: 0px;
+	padding: 5px;
+	/*
+	 * width: 30%; height: 30%;
+	 */
+	z-index: 10;
+	display: none;
+	position: fixed;
+	border-style: dashed; 
+	background-color: white;
+    column-count: 5;
+    -moz-column-count: 5;
+    -webkit-column-count: 5;
+}
+
+.deptree {
+	overflow-y: hidden;
+	overflow-x: auto;
+}
+.word {
+	fill: red;
+	cursor: default;
+}
+.tag { fill: blue; }
+.edge, .arrow { stroke: gray !important; }
+.arrow { fill: gray; }
+.dependency { fill: green; }
+.dependency.active { fill: green; }
+.word.active, { stroke: red !important; }
+.edge.active, .arrow.active {
+	stroke: #000 !important;
+	stroke-width: 1.5;
+}
+.word.w0, .tag.w0, .dependency.w0 { fill: gray; }
+
+.CodeMirror { border: 1px solid black; }
+#edit div.CodeMirror span.CodeMirror-matchingbracket { color: #000; background-color: lightgray;}
+#edit div.CodeMirror span.CodeMirror-nonmatchingbracket { color: #000; background-color: #a22;}
