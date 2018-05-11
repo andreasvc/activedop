@@ -118,6 +118,7 @@ def initpriorities():
 			except (ValueError, ZeroDivisionError):
 				pass
 		queue.append((n, ent, sent))
+	queue.sort(lambda x: x[1], reverse=True)
 	rankingfilename = '%s.rankings.json' % sentfilename
 	with open(rankingfilename, 'w') as rankingfile:
 		json.dump(queue, rankingfile, indent=4)
