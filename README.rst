@@ -34,7 +34,8 @@ tokenize the sentences to annotate according to treebank conventions.
 
 Reference
 ---------
-::
+bibtex::
+
     @InProceedings{vancranenburgh2018active,
         author={van Cranenburgh, Andreas},
         title={Active DOP: A constituency treebank annotation tool with online learning}
@@ -43,3 +44,4 @@ Reference
         pages={38--42},
         url={http://www.aclweb.org/anthology/C18-2009}
     }
+
