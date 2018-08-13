@@ -2,12 +2,13 @@ Active DOP treebank annotation tool
 ===================================
 
 A treebank annotation tool based on a statistical parser that is re-trained during annotation.
+Paper: http://www.aclweb.org/anthology/C18-2009
 
 .. image:: screenshot.png
    :alt: screenshot of annotation tool
 
 Installation instructions
-
+-------------------------
 - install discodop (latest git master): http://github.com/andreasvc/disco-dop
 - install other requirements: pip3 install -r requirements.txt
 
@@ -30,3 +31,15 @@ in the paths specified in the grammar parameter file.
 Sentences need to be segmented, one sentence per line. For best results,
 tokenize the sentences to annotate according to treebank conventions.
 
+
+Reference
+---------
+::
+    @InProceedings{vancranenburgh2018active,
+        author={van Cranenburgh, Andreas},
+        title={Active DOP: A constituency treebank annotation tool with online learning}
+        year={2018},
+        booktitle={Proceedings of COLING system demonstrations},
+        pages={38--42},
+        url={http://www.aclweb.org/anthology/C18-2009}
+    }
