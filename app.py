@@ -77,10 +77,10 @@ app.config.from_pyfile('settings.cfg', silent=True)
 app.config.from_envvar('FLASK_SETTINGS', silent=True)
 
 logging.basicConfig()
-for logger in (logging.getLogger(), app.logger):
-	logger.setLevel(logging.DEBUG)
-	logger.handlers[0].setFormatter(logging.Formatter(
-	fmt='%(asctime)s %(message)s', datefmt='%Y-%m-%d %H:%M:%S'))
+logger = logging.getLogger()
+logger.setLevel(logging.DEBUG)
+logger.handlers[0].setFormatter(logging.Formatter(
+		fmt='%(asctime)s %(message)s', datefmt='%Y-%m-%d %H:%M:%S'))
 
 
 @lru_cache(maxsize=None, typed=False)
@@ -118,7 +118,7 @@ def initpriorities():
 			except (ValueError, ZeroDivisionError):
 				pass
 		queue.append((n, ent, sent))
-	queue.sort(lambda x: x[1], reverse=True)
+	queue.sort(key=lambda x: x[1], reverse=True)
 	rankingfilename = '%s.rankings.json' % sentfilename
 	with open(rankingfilename, 'w') as rankingfile:
 		json.dump(queue, rankingfile, indent=4)
