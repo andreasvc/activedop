@@ -75,7 +75,7 @@ function show(id, name) {
 		el.style.visibility = 'visible';
 	if(name != '') {
 		var elems = document.getElementsByName(name);
-		for (var n in elems)
+		for (var n = 0; n < elems.length; n++)
 			elems[n].disabled = false;
 	}
 }
@@ -87,7 +87,7 @@ function hide(id, name) {
 		el.style.visibility = 'hidden';
 	if(name != '') {
 		var elems = document.getElementsByName(name);
-		for (var n in elems)
+		for (var n = 0; n < elems.length; n++)
 			elems[n].disabled = true;
 	}
 }
@@ -101,32 +101,30 @@ function triggerForm(name, val) {
 	/* call the onChange event of the form element with 'name' and value 'val',
 	 * so that the appropriate form elements may be shown/hidden. */
 	var elems = document.getElementsByName(name)
-	for (var n in elems)
+	for (var n = 0; n < elems.length; n++) {
 		if(elems[n].value == val) {
 			elems[n].onchange();
 			break;
 		}
+	}
 }
 
 function highlightdep(id) {
 	['word', 'tag', 'dependency', 'edge', 'arrow'].forEach(function(a) {
-		var elements = document.getElementsByClassName(a);
-		for (var i in elements) {
-			elements[i].style = '';
-		}
+		var elems = document.getElementsByClassName(a);
+		for (var n = 0; n < elems.length; n++)
+			elems[n].style = '';
 	});
-	var elements = document.getElementsByClassName(id);
-	for (var i in elements) {
-		elements[i].style = 'stroke: black !important; ';
-	}
+	var elems = document.getElementsByClassName(id);
+	for (var n = 0; n < elems.length; n++)
+		elems[n].style = 'stroke: black !important; ';
 }
 
 function nohighlightdep() {
 	['word', 'tag', 'dependency', 'edge', 'arrow'].forEach(function(a) {
-		var elements = document.getElementsByClassName(a);
-		for (var i in elements) {
-			elements[i].style = '';
-		}
+		var elems = document.getElementsByClassName(a);
+		for (var n = 0; n < elems.length; n++)
+			elems[n].style = '';
 	});
 }
 
@@ -180,7 +178,7 @@ function togglespan(flag, pos, elem) {
 	if(i != -1) {
 		array2.splice(i, 1);  // remove array2[i]
 		var elems = document.querySelectorAll('#showrequire > span, #showblock > span');
-		for (var n in elems) {
+		for (var n = 0; n < elems.length; n++) {
 			if(typeof elems[n].dataset !== 'undefined' && elems[n].dataset.s == item) {
 				elems[n].parentNode.removeChild(elems[n]);
 			}
@@ -191,7 +189,7 @@ function togglespan(flag, pos, elem) {
 		array1.splice(i, 1);  // remove array1[i]
 		elem.style.backgroundColor = 'white';
 		var elems = document.querySelectorAll('#showrequire > span, #showblock > span');
-		for (var n in elems) {
+		for (var n = 0; n < elems.length; n++) {
 			if(typeof elems[n].dataset !== 'undefined' && elems[n].dataset.s == item) {
 				elems[n].parentNode.removeChild(elems[n]);
 			}
@@ -226,7 +224,7 @@ function togglespan(flag, pos, elem) {
 			div.innerHTML = xmlhttp.responseText;
 			registertoggleable(div);
 			var elems = div.querySelectorAll('span.n, span.p');
-			for (var n in elems) {
+			for (var n = 0; n < elems.length; n++) {
 				if(typeof elems[n].dataset !== 'undefined') {
 					if(require.indexOf(elems[n].dataset.s) != -1
 							|| frequire.indexOf(elems[n].dataset.s) != -1) {
@@ -255,12 +253,12 @@ function togglespan(flag, pos, elem) {
 
 function registertoggleable(div) {
 	var elems = div.getElementsByClassName('n');
-	for (var n in elems) {
+	for (var n = 0; n < elems.length; n++) {
 		elems[n].onclick = function(event) { togglespan(0, 0, event.currentTarget); }
 		elems[n].oncontextmenu = function(event) { togglespan(1, 0, event.currentTarget); event.preventDefault(); }
 	}
 	var elems = div.getElementsByClassName('p');
-	for (var n in elems) {
+	for (var n = 0; n < elems.length; n++) {
 		elems[n].onclick = function(event) { togglespan(0, 1, event.currentTarget); }
 		elems[n].oncontextmenu = function(event) { togglespan(1, 1, event.currentTarget); event.preventDefault(); }
 	}
@@ -268,7 +266,7 @@ function registertoggleable(div) {
 
 function registerdraggable(div) {
 	var elems = div.getElementsByClassName('n');
-	for (var n in elems) {
+	for (var n = 0; n < elems.length; n++) {
 		elems[n].onclick = pickphrasal;
 		elems[n].oncontextmenu = reparsesubtree;
 		elems[n].draggable = true;
@@ -278,21 +276,21 @@ function registerdraggable(div) {
 		elems[n].ondragover = allowDrop;
 	}
 	var elems = div.getElementsByClassName('p');
-	for (var n in elems) {
+	for (var n = 0; n < elems.length; n++) {
 		elems[n].onclick = pickpos;
 		elems[n].draggable = true;
 		elems[n].ondragstart = drag;
 		elems[n].style = "cursor: move;"
 	}
 	var elems = div.getElementsByClassName('f');
-	for (var n in elems) {
+	for (var n = 0; n < elems.length; n++) {
 		elems[n].onclick = pickfunction;
 		// elems[n].draggable = true;
 		// elems[n].ondragstart = drag;
 		// elems[n].style = "cursor: move;"
 	}
 	var elems = div.getElementsByClassName('m');
-	for (var n in elems) {
+	for (var n = 0; n < elems.length; n++) {
 		elems[n].onclick = pickmorph;
 	}
 }
