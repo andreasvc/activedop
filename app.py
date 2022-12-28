@@ -566,7 +566,12 @@ def edit():
 	if 'dec' in request.args:
 		session['actions'][DECTREE] += int(request.args.get('dec', 0))
 	session.modified = True
-	if 'n' in request.args:
+	msg = ''
+	if request.args.get('annotated', False):
+		msg = Markup('<font color=red>You have already annotated '
+				'this sentence.</font>')
+		tree, senttok = discbrackettree(request.args.get('tree'))
+	elif 'n' in request.args:
 		n = int(request.args.get('n', 1))
 		session['actions'][NBEST] = n
 		require = request.args.get('require', '')
@@ -582,10 +587,7 @@ def edit():
 	else:
 		return 'ERROR: pass n or tree argument.'
 	treestr = writediscbrackettree(tree, senttok, pretty=True).rstrip()
-	msg = ''
-	if request.args.get('annotated', False):
-		msg = Markup('<font color=red>You have already annotated '
-				'this sentence.</font>')
+
 	return render_template('edittree.html',
 			prevlink=('/annotate/annotate/%d' % (sentno - 1))
 				if sentno > 1 else '#',
